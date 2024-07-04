@@ -10,7 +10,10 @@ urlretrieve(url, 'covid_cases.csv')
 
 DF_covid = pd.read_csv('covid_cases.csv')
 # print(DF_covid['Lat']) exibe apenas a coluna Lat
-print(DF_covid.drop(['Lat', 'Long'], axis=1, inplace=True))##Remove o Lat e Long, o inplace ele faz com que o DF original já seja atualizado dessa exclusão
-DF_covid.groupby('Country/Region').sum()##Agrupa pelo pais e soma número de casos de todas as linhas daquele pais
+DF_covid.drop(['Lat', 'Long'], axis=1, inplace=True)##Remove o Lat e Long, o inplace ele faz com que o DF original já seja atualizado dessa exclusão
+DF_country  = DF_covid.groupby('Country/Region').sum()##Agrupa pelo pais e soma número de casos de todas as linhas daquele pais
 
-print(DF_covid.groupby('Country/Region').sum().loc['Albania'])##Pega apenas a linha da albania
+Dates = DF_country.loc['Brazil'].index
+cases = DF_country.loc['Brazil'].values
+
+print(plt.bar(Dates, cases))
